@@ -11,7 +11,16 @@ const getTodo = (req, res) => {
     const {id} = req.params;
 
     const todo = todos.find(todo => todo.id == id)
+
+    if(todo != null){
+
     res.json(todo);
+
+    }else{
+        
+        res.send(`Todo with this id:${id} was not found.`);
+
+    }
 }
 
 const addTodos = (req, res) => {
@@ -64,9 +73,11 @@ const toggleTodo = (req, res) => {
             if(todo.id === id){
                 todo.completed = !todo.completed;
                 todo.lastUpdatedAt = updateTime;
-                res.json(todos);
+                return res.json(todos);
             }
         })
+
+        res.send(`Todo with this id:${id} was not found.`);
 
     }else{
 
@@ -78,6 +89,17 @@ const toggleTodo = (req, res) => {
 
 const deleteTodo = (req, res) => {
     const {id} = req.params;
+    let count = 0;
+
+    todos.forEach(todo => {
+        if(todo.id === id){
+            count++;
+        }
+
+        if(count === 0){
+            return res.send(`Todo with this id:${id} was not found.`);
+        }
+    })
 
     todos = todos.filter(todo => todo.id !== id)
     res.json(todos);
