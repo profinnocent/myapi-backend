@@ -24,7 +24,7 @@ const getTodo = (req, res) => {
 }
 
 const addTodos = (req, res) => {
-    const d = new Data();
+    const d = new Date();
     const timestamp = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " - " + new Date().toLocaleTimeString();
     const todo = {
         id: v4(),
@@ -43,7 +43,8 @@ const addTodos = (req, res) => {
 const updateTodo = (req, res) => {
     const {id} = req.params;
     const {task, completed} = req.body;
-    const d = new Data();
+    let count = 0;
+    const d = new Date();
     const updateTime = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " - " + new Date().toLocaleTimeString();
 
     if(task == null || task == "" || task == " "){
@@ -55,11 +56,16 @@ const updateTodo = (req, res) => {
             if(todo.id === id){
                 todo.task = task;
                 todo.lastUpdatedAt = updateTime;
-               return res.send("Todo updated successfully");
+                count++;
             }
         })
 
-        res.send(`Todo with this id:${id} was not found.`);
+        if(count === 1){
+            res.send("Todo updated successfully");
+        }else{
+            res.send(`Todo with this id:${id} was not found.`);
+        }
+
     }
     
 }
@@ -67,7 +73,8 @@ const updateTodo = (req, res) => {
 const toggleTodo = (req, res) => {
     const {id} = req.params;
     const {completed} = req.body;
-    const d = new Data();
+    let count = 0;
+    const d = new Date();
     const updateTime = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " - " + new Date().toLocaleTimeString();
 
     if(completed === "true" || completed === "false"){
@@ -76,11 +83,15 @@ const toggleTodo = (req, res) => {
             if(todo.id === id){
                 todo.completed = !todo.completed;
                 todo.lastUpdatedAt = updateTime;
-                return res.send("Todo toggled successfully");
+                count++;
             }
         })
 
-        res.send(`Todo with this id:${id} was not found.`);
+        if(count === 1){
+            res.send("Todo toggled successfully");
+        }else{
+            res.send(`Todo with this id:${id} was not found.`);
+        }
 
     }else{
 
@@ -98,14 +109,19 @@ const deleteTodo = (req, res) => {
         if(todo.id === id){
             count++;
         }
-
-        if(count === 0){
-            return res.send(`Todo with this id:${id} was not found.`);
-        }
     })
 
-    todos = todos.filter(todo => todo.id !== id)
-    res.send("Todo deleted successfully");
+    if(count === 0){
+
+        return res.send(`Todo with this id:${id} was not found.`);
+
+    }else{
+
+        todos = todos.filter(todo => todo.id !== id)
+        res.send("Todo deleted successfully");
+   
+    }
+
 }
 
 const checkAuth = (req, res, next) => {
