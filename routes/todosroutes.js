@@ -24,7 +24,8 @@ const getTodo = (req, res) => {
 }
 
 const addTodos = (req, res) => {
-    const timestamp = new Date().toLocaleDateString() + " - " + new Date().toLocaleTimeString();
+    const d = new Data();
+    const timestamp = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " - " + new Date().toLocaleTimeString();
     const todo = {
         id: v4(),
         task: req.body.task,
@@ -36,13 +37,14 @@ const addTodos = (req, res) => {
     todos.push(todo);
 
     res.status(200)
-    res.send("Todo created successfully").json(todo);
+    res.send("Todo created successfully");
 }
 
 const updateTodo = (req, res) => {
     const {id} = req.params;
     const {task, completed} = req.body;
-    const updateTime = new Date().toLocaleDateString() + " - " + new Date().toLocaleTimeString();
+    const d = new Data();
+    const updateTime = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " - " + new Date().toLocaleTimeString();
 
     if(task == null || task == "" || task == " "){
 
@@ -53,7 +55,7 @@ const updateTodo = (req, res) => {
             if(todo.id === id){
                 todo.task = task;
                 todo.lastUpdatedAt = updateTime;
-               return res.send("Todo updated successfully").json(todo);
+               return res.send("Todo updated successfully");
             }
         })
 
@@ -65,7 +67,8 @@ const updateTodo = (req, res) => {
 const toggleTodo = (req, res) => {
     const {id} = req.params;
     const {completed} = req.body;
-    const updateTime = new Date().toLocaleDateString() + " - " + new Date().toLocaleTimeString();
+    const d = new Data();
+    const updateTime = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " - " + new Date().toLocaleTimeString();
 
     if(completed === "true" || completed === "false"){
 
