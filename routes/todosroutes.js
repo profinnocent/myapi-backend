@@ -44,9 +44,11 @@ const updateTodo = (req, res) => {
             if(todo.id === id){
                 todo.task = task;
                 todo.lastUpdatedAt = updateTime;
-                res.json(todos);
+               return res.json(todos);
             }
         })
+
+        res.send(`Todo with this id:${id} was not found.`);
     }
     
 }
