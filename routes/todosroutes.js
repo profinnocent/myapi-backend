@@ -17,7 +17,7 @@ const getTodo = (req, res) => {
     res.json(todo);
 
     }else{
-        
+
         res.send(`Todo with this id:${id} was not found.`);
 
     }
@@ -36,7 +36,7 @@ const addTodos = (req, res) => {
     todos.push(todo);
 
     res.status(200)
-    res.json(todos);
+    res.send("Todo created successfully").json(todo);
 }
 
 const updateTodo = (req, res) => {
@@ -53,7 +53,7 @@ const updateTodo = (req, res) => {
             if(todo.id === id){
                 todo.task = task;
                 todo.lastUpdatedAt = updateTime;
-               return res.json(todos);
+               return res.send("Todo updated successfully").json(todo);
             }
         })
 
@@ -73,7 +73,7 @@ const toggleTodo = (req, res) => {
             if(todo.id === id){
                 todo.completed = !todo.completed;
                 todo.lastUpdatedAt = updateTime;
-                return res.json(todos);
+                return res.send("Todo toggled successfully");
             }
         })
 
@@ -102,7 +102,7 @@ const deleteTodo = (req, res) => {
     })
 
     todos = todos.filter(todo => todo.id !== id)
-    res.json(todos);
+    res.send("Todo deleted successfully");
 }
 
 const checkAuth = (req, res, next) => {
