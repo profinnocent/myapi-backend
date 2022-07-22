@@ -128,8 +128,7 @@ const checkAuth = (req, res, next) => {
     if(req.header("auth") === "true"){
         next();
     }else{
-        res.status(403);
-        res.send("You are not authenticated.");
+        res.status(403).send("You are not authenticated.");
     }
 }
 
