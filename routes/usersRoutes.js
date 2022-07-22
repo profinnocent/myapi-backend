@@ -127,7 +127,7 @@ const loginUser = (req, res) => {
 
 
 //
-const registerUser = async (req, res) => {
+const registerUser = (req, res) => {
 //if(users.length != 0)
 
   let errmessage = "";
@@ -150,45 +150,47 @@ const registerUser = async (req, res) => {
   // });
 
   const user = {
-    id: v4(),
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    phoneno: req.body.phoneno,
-    email: req.body.email,
-    password : req.body.password,
-    isAuth: false,
-    isLoggedin: false,
-    createdAt: timestamp,
-    lastUpdatedAt: "",
+    "id": v4(),
+    "firstname": req.body.firstname,
+   "lastname": req.body.lastname,
+   "phoneno": req.body.phone,
+    "email": req.body.email,
+    "password" : req.body.password,
+    "isAuth": false,
+    "isLoggedin": false,
+    "createdAt": timestamp,
+    "lastUpdatedAt": "",
   };
 
   console.log(user);
 
-  if(errmessage == "err403"){
+  res.send("Form Data submitted");
 
-    res.status(403).send("Password hash failed. Can not create User.");
+  // if(errmessage == "err403"){
 
-  }else{
+  //   res.status(403).send("Password hash failed. Can not create User.");
 
-    users.map((dbuser) => {
-      if (dbuser.email === user.email) {
-        count++;
-        //break;
-      }
-    });
+  // }else{
 
-    if (count === 1) {
+  //   users.map((dbuser) => {
+  //     if (dbuser.email === user.email) {
+  //       count++;
+  //       //break;
+  //     }
+  //   });
 
-      res.status(403).send("This user email is already registered. Pls choose a different email.");
+  //   if (count === 1) {
 
-    }else{
+  //     res.status(403).send("This user email is already registered. Pls choose a different email.");
 
-        users.push(user);
+  //   }else{
 
-        res.status(200).send("User created successfully");
+  //       users.push(user);
+
+  //       res.status(200).send("User created successfully");
     
-    }
-  }
+  //   }
+  // }
 };
 
 const resetUser = (req, res) => {

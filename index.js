@@ -1,5 +1,7 @@
 //Call express packages
 const express = require("express");
+
+//create express instance
 const app = express();
 
 //Run dotenv config
@@ -12,7 +14,7 @@ const HOST = process.env.HOST;
 const cors = require("cors");
 
 //For all domains
-app.use(cors("*"));
+app.use(cors({origin: '*'}));
 
 //For one domain
 //app.use(cors("https://prof-todos.netlify.app"));
@@ -26,6 +28,8 @@ app.use(express.json());
 
 //For url encoded data
 app.use(express.urlencoded({extended: true}))
+
+
 
 //Route controllers
 const {getTodos, getTodo, addTodos, updateTodo, deleteTodo, checkAuth, toggleTodo} = require("./routes/todosroutes");
