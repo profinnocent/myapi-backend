@@ -135,7 +135,7 @@ const registerUser = (req, res) => {
   const d = new Date();
   const timestamp = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " - " + new Date().toLocaleTimeString();
   
-  console.log(req.body)
+  //console.log(req.body)
 
   // generate salt to hash password
   //const salt = await bcrypt.genSalt(10);
@@ -150,16 +150,16 @@ const registerUser = (req, res) => {
   // });
 
   const user = {
-    "id": v4(),
-    "firstname": req.body.firstname,
-   "lastname": req.body.lastname,
-   "phoneno": req.body.phone,
-    "email": req.body.email,
-    "password" : req.body.password,
-    "isAuth": false,
-    "isLoggedin": false,
-    "createdAt": timestamp,
-    "lastUpdatedAt": "",
+    id: v4(),
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    phoneno: req.body.phone,
+    email: req.body.email,
+    password : req.body.password,
+    isAuth : false,
+    isLoggedin : false,
+    createdAt: timestamp,
+    lastUpdatedAt : "",
   };
 
   console.log(user);
